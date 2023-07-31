@@ -13,31 +13,44 @@ errorEl.classList.add('is-hidden');
 
 // result = null;
 
-const breeds = new CatApi();
+const catApiNew = new CatApi();
 
-breeds.fetchBreeds().then(data => {
-  let newMurkup = '';
-  data.forEach(element => {
-    let { id, name } = element;
-    newMurkup += `<option value="${id}">${name}</option>`;
+catApiNew
+  .fetchBreeds()
+  .then(data => {
+    let newMurkup = '';
+    data.forEach(element => {
+      let { id, name } = element;
+      newMurkup += `<option value="${id}">${name}</option>`;
+    });
+    selectEl.innerHTML = `${newMurkup}`;
+    selectEl.classList.remove('is-hidden');
+    loaderEl.classList.add('is-hidden');
+  })
+  .catch(error => {
+    errorEl.classList.remove('is-hidden');
   });
-  selectEl.innerHTML = `${newMurkup}`;
-  selectEl.classList.remove('is-hidden');
-});
 
 function fetchCatByBreed(id) {
+  loaderEl.classList.remove('is-hidden');
   catInfoEl.innerHTML = '';
-  breeds.fetchCatByBreed(id).then(data => {
-    const breeds = data[0];
-    let newMarkup = '';
-    newMarkup = `<img src="${data[0].url}" alt="" height="600">
+  catApiNew
+    .fetchCatByBreed(id)
+    .then(data => {
+      const breeds = data[0];
+      let newMarkup = '';
+      newMarkup = `<img src="${data[0].url}" alt="" height="600">
       <h2>${breeds.breeds[0].name}</h2>
       <p>${breeds.breeds[0].description}</p>
       <p>${breeds.breeds[0].temperament}</p>`;
 
-    catInfoEl.insertAdjacentHTML('beforeend', newMarkup);
-    loaderEl.classList.add('is-hidden');
-  });
+      catInfoEl.insertAdjacentHTML('beforeend', newMarkup);
+      loaderEl.classList.add('is-hidden');
+    })
+    .catch(error => {
+      loaderEl.classList.add('is-hidden');
+      errorEl.classList.remove('is-hidden');
+    });
 }
 
 selectEl.addEventListener('change', fetchCatByBreed);
