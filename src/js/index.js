@@ -12,7 +12,7 @@ const catApiNew = new CatApi();
 
 catApiNew
   .fetchBreeds()
-  .then(data => {
+  .then(({ data }) => {
     let newMurkup = '';
     data.forEach(element => {
       let { id, name } = element;
@@ -31,13 +31,13 @@ function fetchCatByBreed(id) {
   catInfoEl.innerHTML = '';
   catApiNew
     .fetchCatByBreed(id)
-    .then(data => {
+    .then(({ data }) => {
       const breeds = data[0];
       let newMarkup = '';
-      newMarkup = `<img src="${data[0].url}" alt="" height="600">
-      <h2>${breeds.breeds[0].name}</h2>
-      <p>${breeds.breeds[0].description}</p>
-      <p>${breeds.breeds[0].temperament}</p>`;
+      newMarkup = `<img class="image" src="${data[0].url}" alt="" height="600">
+      <h2 class="title">${breeds.breeds[0].name}</h2>
+      <p class="description">${breeds.breeds[0].description}</p>
+      <p class="temperament">${breeds.breeds[0].temperament}</p>`;
 
       catInfoEl.insertAdjacentHTML('beforeend', newMarkup);
       loaderEl.classList.add('is-hidden');
