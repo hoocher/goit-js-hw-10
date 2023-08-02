@@ -1,6 +1,3 @@
-// import { fetchBreeds } from './cat-api';
-// import { fetchCatByBreed } from './cat-api';
-
 import { CatApi } from './cat-api1';
 
 const selectEl = document.querySelector('.breed-select');
@@ -10,8 +7,6 @@ const errorEl = document.querySelector('.error');
 
 selectEl.classList.add('is-hidden');
 errorEl.classList.add('is-hidden');
-
-// result = null;
 
 const catApiNew = new CatApi();
 
@@ -54,8 +49,3 @@ function fetchCatByBreed(id) {
 }
 
 selectEl.addEventListener('change', fetchCatByBreed);
-
-// console.log(result);
-// fetchBreeds();
-
-// selectEl.addEventListener('change', fetchCatByBreed);
